@@ -35,6 +35,7 @@ class PenyusutanController extends CI_Controller
         $result = [];
         $index = 0;
 
+        // Revisi penyusutan
         $cariTanggal = date('Y-m-d', strtotime('-1 month', strtotime($periode)));
         $aset = $this->Aset->getDataDapatDisusutkan($cariTanggal);
 
@@ -45,6 +46,7 @@ class PenyusutanController extends CI_Controller
             $jumlahPenyusutan = count($detailPenyusutan);
 
             $beda = abs(strtotime($periode) - strtotime($row['tanggal']));
+            // Revisi penyusutan
             $beda = floor($beda / (30 * 60 * 60 * 24));
 
             if ($beda > $jumlahPenyusutan) {

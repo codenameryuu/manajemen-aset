@@ -62,41 +62,56 @@ class JurnalController extends CI_Controller
         $result = [];
         $index = 0;
 
+        // Transaksi Perolehan
         foreach ($perolehan as $row) {
-            $aset = $this->Aset->getDataByKodeTransaksi($row['kode_transaksi']);
+            $harga = $row['harga'];
+            $jumlah = $row['jumlah'];
+            $tanggal = $row['tanggal'];
+            $kodeTransaksi = $row['kode_transaksi'];
+            // Contoh : PO000001
+
+            // Ambil data aset
+            $aset = $this->Aset->getDataByKodeTransaksi($kodeTransaksi);
+            // Ambil nama aset
             $namaAset = $aset[0]['nama'];
 
-            $jurnal = $this->Jurnal->getDataByKodeTransaksi($row['kode_transaksi']);
+            // Ambil data jurnal
+            $jurnal = $this->Jurnal->getDataByKodeTransaksi($kodeTransaksi);
             $kodeAkunDebit = '';
             $kodeAkunKredit = '';
 
             foreach ($jurnal as $row2) {
+                $kodeAkun = $row2['kode_akun'];
                 $posisi = $row2['posisi'];
 
                 if ($posisi == 'Debit') {
-                    $kodeAkunDebit = $row2['kode_akun'];
+                    $kodeAkunDebit = $kodeAkun;
                 } else if ($posisi == 'Kredit') {
-                    $kodeAkunKredit = $row2['kode_akun'];
+                    $kodeAkunKredit = $kodeAkun;
                 }
             }
 
+            // Ambil nama akun debit
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunDebit);
             $namaAkunDebit = $akun[0]['nama'];
 
+            // Ambil nama akun kredit
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunKredit);
             $namaAkunKredit = $akun[0]['nama'];
 
+            // Cek jenis perolehan
             if ($kodeAkunDebit == '114') {
                 $jenis = 'Pembelian';
             } else {
                 $jenis = 'Hibah';
             }
 
-            $nominal = $row['jumlah'] * $row['harga'];
+            // Ambil nominal
+            $nominal = $jumlah * $harga;
 
             $result[$index] = [
                 'transaksi' => 'Perolehan Aset ' . $namaAset . ' Melalui ' . $jenis,
-                'tanggal' => $row['tanggal'],
+                'tanggal' => $tanggal,
                 'kode_akun_debit' => $kodeAkunDebit,
                 'kode_akun_kredit' => $kodeAkunKredit,
                 'nama_akun_debit' => $namaAkunDebit,
@@ -107,38 +122,56 @@ class JurnalController extends CI_Controller
             $index++;
         }
 
+        // Transaksi Penyusutan
         foreach ($penyusutan as $row) {
-            $detailPenyustan = $this->DetailPenyusutan->getDataByKodeTransaksi($row['kode_transaksi']);
+            $kodeTransaksi = $row['kode_transaksi'];
+            $tanggal = $row['tanggal'];
 
-            foreach ($detailPenyustan as $row2) {
-                $aset = $this->Aset->getDataByKode($row2['kode_aset']);
+            // Ambil data detail penyusutan
+            $detailPenyusutan = $this->DetailPenyusutan->getDataByKodeTransaksi($kodeTransaksi);
+
+            foreach ($detailPenyusutan as $row2) {
+                $kodeTransaksi = $row2['kode_transaksi'];
+                $nilaiPenyusutan = $row2['nilai_penyusutan'];
+                $kodeAset = $row2['kode_aset'];
+
+                // Ambil data aset
+                $aset = $this->Aset->getDataByKode($kodeAset);
+                // Ambil nama aset
                 $namaAset = $aset[0]['nama'];
 
-                $jurnal = $this->Jurnal->getDataByKodeTransaksi($row2['kode_transaksi']);
+                // Ambil data jurnal
+                $jurnal = $this->Jurnal->getDataByKodeTransaksi($kodeTransaksi);
                 $kodeAkunDebit = '';
                 $kodeAkunKredit = '';
 
                 foreach ($jurnal as $row3) {
+                    $kodeAkun = $row3['kode_akun'];
                     $posisi = $row3['posisi'];
 
                     if ($posisi == 'Debit') {
-                        $kodeAkunDebit = $row3['kode_akun'];
+                        $kodeAkunDebit = $kodeAkun;
                     } else if ($posisi == 'Kredit') {
-                        $kodeAkunKredit = $row3['kode_akun'];
+                        $kodeAkunKredit = $kodeAkun;
                     }
                 }
 
+                // Ambil data akun
                 $akun = $this->Akun->getDataByKodeAkun($kodeAkunDebit);
+                // Ambil nama akun debit
                 $namaAkunDebit = $akun[0]['nama'];
 
+                // Ambil data akun
                 $akun = $this->Akun->getDataByKodeAkun($kodeAkunKredit);
+                // Ambil nama akun kredit
                 $namaAkunKredit = $akun[0]['nama'];
 
-                $nominal = $row2['nilai_penyusutan'];
+                // Ambil nominal
+                $nominal = $nilaiPenyusutan;
 
                 $result[$index] = [
                     'transaksi' => 'Penyusutan Aset ' . $namaAset,
-                    'tanggal' => $row['tanggal'],
+                    'tanggal' => $tanggal,
                     'kode_akun_debit' => $kodeAkunDebit,
                     'kode_akun_kredit' => $kodeAkunKredit,
                     'nama_akun_debit' => $namaAkunDebit,
@@ -151,34 +184,47 @@ class JurnalController extends CI_Controller
         }
 
         foreach ($perbaikan as $row) {
-            $aset = $this->Aset->getDataByKode($row['kode_aset']);
+            $kodeTransaksi = $row['kode_transaksi'];
+            $kodeAset = $row['kode_aset'];
+            $tanggal = $row['tanggal'];
+            $nilai = $row['nilai'];
+
+            // Ambil data aset
+            $aset = $this->Aset->getDataByKode($kodeAset);
+            // Ambil nama aset
             $namaAset = $aset[0]['nama'];
 
-            $jurnal = $this->Jurnal->getDataByKodeTransaksi($row['kode_transaksi']);
+            $jurnal = $this->Jurnal->getDataByKodeTransaksi($kodeTransaksi);
             $kodeAkunDebit = '';
             $kodeAkunKredit = '';
 
             foreach ($jurnal as $row2) {
+                $kodeAkun = $row2['kode_akun'];
                 $posisi = $row2['posisi'];
 
                 if ($posisi == 'Debit') {
-                    $kodeAkunDebit = $row2['kode_akun'];
+                    $kodeAkunDebit = $kodeAkun;
                 } else if ($posisi == 'Kredit') {
-                    $kodeAkunKredit = $row2['kode_akun'];
+                    $kodeAkunKredit = $kodeAkun;
                 }
             }
 
+            // Ambil data akun
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunDebit);
+            // Ambil nama akun debit
             $namaAkunDebit = $akun[0]['nama'];
 
+            // Ambil data akun
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunKredit);
+            // Ambil nama akun kredit
             $namaAkunKredit = $akun[0]['nama'];
 
-            $nominal = $row['nilai'];
+            // Ambil nominal
+            $nominal = $nilai;
 
             $result[$index] = [
                 'transaksi' => 'Perbaikan Aset ' . $namaAset,
-                'tanggal' => $row['tanggal'],
+                'tanggal' => $tanggal,
                 'kode_akun_debit' => $kodeAkunDebit,
                 'kode_akun_kredit' => $kodeAkunKredit,
                 'nama_akun_debit' => $namaAkunDebit,
@@ -190,34 +236,47 @@ class JurnalController extends CI_Controller
         }
 
         foreach ($pemberhentian as $row) {
-            $aset = $this->Aset->getDataByKode($row['kode_aset']);
+            $kodeTransaksi = $row['kode_transaksi'];
+            $kodeAset = $row['kode_aset'];
+            $tanggal = $row['tanggal'];
+
+            // Ambil data aset
+            $aset = $this->Aset->getDataByKode($kodeAset);
+            // Ambil nama aset
             $namaAset = $aset[0]['nama'];
 
-            $jurnal = $this->Jurnal->getDataByKodeTransaksi($row['kode_transaksi']);
+            // Ambil jurnal
+            $jurnal = $this->Jurnal->getDataByKodeTransaksi($kodeTransaksi);
             $kodeAkunDebit = '';
             $kodeAkunKredit = '';
 
             foreach ($jurnal as $row2) {
+                $kodeAkun = $row2['kode_akun'];
                 $posisi = $row2['posisi'];
 
                 if ($posisi == 'Debit') {
-                    $kodeAkunDebit = $row2['kode_akun'];
+                    $kodeAkunDebit = $kodeAkun;
                 } else if ($posisi == 'Kredit') {
-                    $kodeAkunKredit = $row2['kode_akun'];
+                    $kodeAkunKredit = $kodeAkun;
                 }
             }
 
+            // Ambil data akun
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunDebit);
+            // Ambil nama akun debit
             $namaAkunDebit = $akun[0]['nama'];
 
+            // Ambil data akun
             $akun = $this->Akun->getDataByKodeAkun($kodeAkunKredit);
+            // Ambil nama akun kredit
             $namaAkunKredit = $akun[0]['nama'];
 
+            // Ambil nama
             $nominal = $aset[0]['harga'];
 
             $result[$index] = [
                 'transaksi' => 'Pemberhentian Aset ' . $namaAset,
-                'tanggal' => $row['tanggal'],
+                'tanggal' => $tanggal,
                 'kode_akun_debit' => $kodeAkunDebit,
                 'kode_akun_kredit' => $kodeAkunKredit,
                 'nama_akun_debit' => $namaAkunDebit,

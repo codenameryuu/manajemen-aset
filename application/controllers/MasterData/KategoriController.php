@@ -39,11 +39,13 @@ class KategoriController extends CI_Controller
     {
         $kode = $this->input->post('kode');
         $nama = $this->input->post('nama');
+        // Revisi umur ekonomis
         $umurEkonomis = $this->input->post('umurEkonomis');
 
         $data = [
             'kode' => $kode,
             'nama' => $nama,
+            // Revisi umur ekonomis
             'umur_ekonomis' => $umurEkonomis,
         ];
 
@@ -71,11 +73,13 @@ class KategoriController extends CI_Controller
         $id = $this->input->post('id');
         $kode = $this->input->post('kode');
         $nama = $this->input->post('nama');
+        // Revisi umur ekonomis
         $umurEkonomis = $this->input->post('umurEkonomis');
 
         $data = [
             'kode' => $kode,
             'nama' => $nama,
+            // Revisi umur eknomis
             'umur_ekonomis' => $umurEkonomis,
         ];
 
