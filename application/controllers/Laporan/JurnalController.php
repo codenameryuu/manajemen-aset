@@ -21,37 +21,6 @@ class JurnalController extends CI_Controller
         $this->load->model('Pemberhentian');
     }
 
-    // public function filterJurnal($tanggalAwal, $tanggalAkhir)
-    // {
-    //     $jurnal = $this->Jurnal->getDataFilterByTanggal($tanggalAwal, $tanggalAkhir);
-
-    //     $result = [];
-    //     $index = 0;
-
-    //     foreach ($jurnal as $row) {
-    //         $result[$index] = $row;
-    //         $debit = 0;
-    //         $kredit = 0;
-
-    //         if ($row['posisi'] == 'Debit') {
-    //             $debit = $row['nominal'];
-    //         } else {
-    //             $kredit = $row['nominal'];
-    //         }
-
-    //         $result[$index]['debit'] = $debit;
-    //         $result[$index]['kredit'] = $kredit;
-
-    //         $akun = $this->Akun->getDataByKodeAkun($row['kode_akun']);
-    //         $akun = $akun[0];
-
-    //         $result[$index]['nama_akun'] = $akun['nama'];
-    //         $index++;
-    //     }
-
-    //     return $result;
-    // }
-
     public function filterJurnal($tanggalAwal, $tanggalAkhir)
     {
         $perolehan = $this->Perolehan->getDataFilterByTanggal($tanggalAwal, $tanggalAkhir);

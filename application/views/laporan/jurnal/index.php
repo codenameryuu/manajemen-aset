@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
 </head>
 
+<style>
+    .datepicker {
+        background-color: white !important;
+    }
+</style>
+
 <body class="app sidebar-mini rtl">
 
     <?php $this->load->view('partials/header') ?>

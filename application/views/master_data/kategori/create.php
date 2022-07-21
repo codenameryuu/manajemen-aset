@@ -57,9 +57,7 @@
                                     Kode Kategori
                                 </label>
 
-                                <div class="rounded" id="divKode">
-                                    <input type="text" class="form-control" name="kode" id="kode" onkeyup="cekKode()" placeholder="Masukan Kode Kategori" autocomplete="off">
-                                </div>
+                                <input type="text" class="form-control" name="kode" id="kode" onkeyup="cekKode()" placeholder="Masukan Kode Kategori" autocomplete="off">
 
                                 <div>
                                     <span class="text-danger" id="notifKode"></span>
@@ -72,9 +70,7 @@
                                     Nama Kategori
                                 </label>
 
-                                <div class="rounded" id="divNama">
-                                    <input type="text" class="form-control" name="nama" id="nama" onkeyup="cekNama()" placeholder="Masukan Nama Kategori" autocomplete="off">
-                                </div>
+                                <input type="text" class="form-control" name="nama" id="nama" onkeyup="cekNama()" placeholder="Masukan Nama Kategori" autocomplete="off">
 
                                 <div>
                                     <span class="text-danger" id="notifNama"></span>
@@ -111,18 +107,6 @@
         function cekKode(statusBlock) {
             let kode = $('#kode').val();
 
-            if (statusBlock == 'block') {
-                let message = `<span class="text-dark"> Loading...</span>`;
-
-                $("#divKode").block({
-                    message: message,
-                    css: {
-                        padding: '5px',
-                        borderRadius: '10px'
-                    }
-                });
-            }
-
             $.ajax({
                 url: "<?php echo site_url('master-data/kategori/cek-kode') ?>",
                 method: "GET",
@@ -133,10 +117,6 @@
                 success: function(data) {
                     let status = data.status;
                     let message = data.message;
-
-                    if (statusBlock == 'block') {
-                        $("#divKode").unblock();
-                    }
 
                     if (status) {
                         $('#statusKode').val('Valid');
@@ -152,18 +132,6 @@
         function cekNama(statusBlock) {
             let nama = $('#nama').val();
 
-            if (statusBlock == 'block') {
-                let message = `<span class="text-dark"> Loading...</span>`;
-
-                $("#divNama").block({
-                    message: message,
-                    css: {
-                        padding: '5px',
-                        borderRadius: '10px'
-                    }
-                });
-            }
-
             $.ajax({
                 url: "<?php echo site_url('master-data/kategori/cek-nama') ?>",
                 method: "GET",
@@ -174,10 +142,6 @@
                 success: function(data) {
                     let status = data.status;
                     let message = data.message;
-
-                    if (statusBlock == 'block') {
-                        $("#divNama").unblock();
-                    }
 
                     if (status) {
                         $('#statusNama').val('Valid');

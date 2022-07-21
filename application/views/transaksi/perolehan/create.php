@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
 </head>
 
+<style>
+    .datepicker {
+        background-color: white !important;
+    }
+</style>
+
 <body class="app sidebar-mini rtl">
 
     <?php $this->load->view('partials/header') ?>
@@ -105,7 +111,7 @@
                                     Kategori Aset
                                 </label>
 
-                                <select class="form-control select2" name="kategori" id="kategori">
+                                <select class="form-control select2" name="kategori" id="kategori" onchange="cekKategori()">
                                     <option value="">
                                         Pilih salah satu
                                     </option>
@@ -123,7 +129,7 @@
                                     Umur (Tahun)
                                 </label>
 
-                                <input type="text" class="form-control" name="umur" id="umur" placeholder="Masukan Umur (Tahun)" onkeypress="return /[0-9]/i.test(event.key)" autocomplete="off">
+                                <input type="text" class="form-control" name="umur" id="umur" placeholder="Masukan Umur (Tahun)" onkeypress="return /[0-9]/i.test(event.key)" autocomplete="off" readonly>
                             </div>
 
                             <div class="form-group">
@@ -226,6 +232,25 @@
 
             angka = split[1] != undefined ? angka + ',' + split[1] : angka;
             return angka
+        }
+
+        function cekKategori() {
+            let kategori = $('#kategori').val();
+
+            $.ajax({
+                url: "<?php echo site_url('master-data/kategori/cek-umur-ekonomis') ?>",
+                method: "GET",
+                dataType: "JSON",
+                data: {
+                    kode: kategori,
+                },
+                success: function(data) {
+                    let kategori = data.kategori;
+                    let umur = kategori.umur_ekonomis;
+
+                    $('#umur').val(umur);
+                }
+            });
         }
 
         function getTotal() {

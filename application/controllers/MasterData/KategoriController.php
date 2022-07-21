@@ -102,6 +102,25 @@ class KategoriController extends CI_Controller
     // Ajax
     // =============================================================================
 
+    public function cekUmurEkonimis()
+    {
+        $kode = $this->input->get('kode');
+
+        $kategori = $this->Kategori->getDataByKode($kode);
+        $kategori = $kategori[0];
+
+        $status = true;
+        $message = 'Data berhasil diambil !';
+
+        $data = [
+            'status' => $status,
+            'message' => $message,
+            'kategori' => $kategori,
+        ];
+
+        echo json_encode($data);
+    }
+
     public function cekKode()
     {
         $id = $this->input->get('id');

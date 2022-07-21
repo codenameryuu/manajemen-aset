@@ -99,6 +99,7 @@ $route['master-data/kategori/destroy'] = 'MasterData/KategoriController/destroy'
 // Ajax
 $route['master-data/kategori/cek-kode'] = 'MasterData/KategoriController/cekKode';
 $route['master-data/kategori/cek-nama'] = 'MasterData/KategoriController/cekNama';
+$route['master-data/kategori/cek-umur-ekonomis'] = 'MasterData/KategoriController/cekUmurEkonimis';
 
 // ============================================================================================
 // Data Aset Aktif

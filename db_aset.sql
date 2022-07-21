@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 17, 2022 at 05:10 PM
+-- Generation Time: Jul 21, 2022 at 02:07 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -127,10 +127,10 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id`, `kode`, `nama`, `umur_ekonomis`, `created_at`, `updated_at`) VALUES
-(1, 'KT01', 'Bangunan', '1', '2022-06-10 22:11:47', NULL),
-(2, 'KT02', 'Peralatan', '1', '2022-06-10 22:11:47', NULL),
-(3, 'KT03', 'Alat Berat', '1', '2022-06-10 22:11:47', NULL),
-(4, 'KT04', 'Transportasi', '1', '2022-06-10 22:11:47', NULL);
+(1, 'KT01', 'Bangunan', '20', '2022-06-10 22:11:47', NULL),
+(2, 'KT02', 'Peralatan', '4', '2022-06-10 22:11:47', NULL),
+(3, 'KT03', 'Alat Berat', '9', '2022-06-10 22:11:47', NULL),
+(4, 'KT04', 'Transportasi', '4', '2022-06-10 22:11:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -224,6 +224,13 @@ CREATE TABLE `perolehan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `perolehan`
+--
+
+INSERT INTO `perolehan` (`id`, `kode_transaksi`, `tanggal`, `nama`, `jenis`, `harga`, `jumlah`, `nota`, `created_at`, `updated_at`) VALUES
+(1, 'PO000001', '2022-06-01', 'Kipas Angin', 'Pembelian', '100000', '1', 'Nota-001', '2022-07-21 14:03:48', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -241,7 +248,7 @@ CREATE TABLE `saldo_awal` (
 --
 
 INSERT INTO `saldo_awal` (`id`, `tanggal`, `nominal`) VALUES
-(1, '2020-05-01', '50000000');
+(1, '2020-08-01', '50000000');
 
 -- --------------------------------------------------------
 
@@ -342,7 +349,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `aset`
@@ -396,7 +403,7 @@ ALTER TABLE `perbaikan`
 -- AUTO_INCREMENT for table `perolehan`
 --
 ALTER TABLE `perolehan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `saldo_awal`
