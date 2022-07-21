@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 21, 2022 at 02:07 PM
+-- Generation Time: Jul 21, 2022 at 02:32 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -224,13 +224,6 @@ CREATE TABLE `perolehan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `perolehan`
---
-
-INSERT INTO `perolehan` (`id`, `kode_transaksi`, `tanggal`, `nama`, `jenis`, `harga`, `jumlah`, `nota`, `created_at`, `updated_at`) VALUES
-(1, 'PO000001', '2022-06-01', 'Kipas Angin', 'Pembelian', '100000', '1', 'Nota-001', '2022-07-21 14:03:48', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -403,7 +396,7 @@ ALTER TABLE `perbaikan`
 -- AUTO_INCREMENT for table `perolehan`
 --
 ALTER TABLE `perolehan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `saldo_awal`
