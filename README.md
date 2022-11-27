@@ -12,10 +12,6 @@ Aplikasi ini dibangun menggunakan
 2. Framework Codeigniter 3
 3. Database MYSQL
 
-## Library
-
-1. Guzzle 7.0
-
 ## Account
 
 1. username : `superadmin` dengan password `superadmin`, memiliki role sebagai superadmin
